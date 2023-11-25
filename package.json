@@ -1,0 +1,18 @@
+{
+  "name": "retaman",
+  "version": "1.0.0",
+  "description": "A simple task manager using Redis",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tonybnya",
+  "license": "ISC",
+  "dependencies": {
+    "express": "*",
+    "body-parser": "*",
+    "ejs": "^2.4.2",
+    "morgan": "*",
+    "redis": "*"
+  }
+}
