@@ -16,3 +16,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Start a new server
+const port = 3000;
+app.listen(port);
+console.log(`Server started at port ${port}...`)
+
+module.exports = app;
