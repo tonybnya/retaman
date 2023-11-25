@@ -8,7 +8,7 @@ const redis = require('redis');
 const app = express();
 
 // View engine setup
-app.set('views', path.join(__dirname, (views));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Configuration and dependencies needed for the module to run
