@@ -17,6 +17,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Set a welcome message for the homepage
+app.get('/', (_, res) => {
+  res.send('Welcome to retaman!');
+});
+
 // Start a new server
 const port = 3000;
 app.listen(port);
