@@ -1,1 +1,9 @@
-Hello, World!
+<%# Render the dynamic title %>
+<%= title %>
+
+<%# Loop through the list of tasks %>
+<ul>
+<% tasks.forEach(function(task){ %>
+  <li><%= task %></li>
+<% }) %>
+</ul>

@@ -4,17 +4,14 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const redis = require('redis');
 
-const log = (arg) => console.log(arg);
-
 // Initialize the app
 const app = express();
 
 // Create a Redis client
 const client = redis.createClient();
-
-// Connect the client to the Redis Server
+// Connect the app through the Redis client
 client.on('connect', () => {
-  log('Redis Server Connected...');
+  console.log('Redis Server Connected...');
 });
 
 // View engine setup
@@ -29,13 +26,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Set a welcome message for the homepage
 app.get('/', (_, res) => {
-  // render the single view index.ejs from the 'views' folder
-  res.render('index');
+  const title = 'Redis Task Manager';
+
+  // Fetch all the items in the 'tasks' list
+  client.lRange('tasks', 0, -1, (err, reply) => {
+    res.render('index', {
+      title: title,
+      tasks: reply
+    });
+  });
 });
 
-// Start a new server
+// Set a port
 const port = 3000;
+// Start a new server
 app.listen(port);
-log(`Server Started On Port ${port}...`)
+console.log(`Server Started On Port ${port}...`);
 
 module.exports = app;
