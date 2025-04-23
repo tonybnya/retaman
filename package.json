@@ -1,0 +1,19 @@
+{
+  "name": "retaman",
+  "version": "1.0.0",
+  "description": "Redis Task Manager",
+  "license": "ISC",
+  "author": "@tonybnya",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "ejs": "^3.1.10",
+    "express": "*",
+    "morgan": "*",
+    "redis": "*"
+  }
+}
