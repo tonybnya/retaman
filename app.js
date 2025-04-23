@@ -8,8 +8,6 @@ const path = require("path");
 const app = express();
 // set up the server port
 const port = 3000;
-// set up the welcome message
-const msg = "Welcome to Retaman - Redis Task Manager";
 
 // set up the views
 app.set("views", path.join(__dirname, "views"));
@@ -23,7 +21,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // set up the root endpoint
 app.get("/", (req, res) => {
-  res.send(msg);
+  // set up the welcome message
+  const msg = "Welcome to Retaman - Redis Task Manager";
+
+  res.render("index", {
+    msg,
+  });
 });
 
 app.listen(port);
