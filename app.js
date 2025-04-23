@@ -41,13 +41,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // set up the root endpoint
-app.get("/", (req, res) => {
-  // set up the welcome message
-  const msg = "Welcome to Retaman - Redis Task Manager";
+app.get("/", async (req, res) => {
+  try {
+    // set up the welcome message
+    const msg = "Welcome to Retaman - Redis Task Manager";
 
-  res.render("index", {
-    msg,
-  });
+    // get tasks - using Redis v4+ API with proper async handling
+    const tasks = await client.lRange("tasks", 0, -1);
+
+    res.render("index", {
+      msg,
+      tasks: tasks || [],
+    });
+  } catch (err) {
+    console.error("Error fetching tasks:", err);
+    res.render("index", {
+      msg: "Welcome to Retaman - Redis Task Manager",
+      tasks: [],
+      error: "Failed to fetch tasks"
+    });
+  }
 });
 
 // initialize Redis connection and start server
