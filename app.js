@@ -1,34 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-const redis = require("redis");
 const path = require("path");
+
+// import routes
+const tasksRoutes = require("./routes/tasks");
+
+// import Redis client from config
+const { connectRedis } = require("./config/redis");
 
 // init the main app
 const app = express();
 
 // set up the server port
 const port = 3000;
-
-// create Redis client
-const client = redis.createClient();
-
-// connect to Redis
-// properly handling the Redis v4+ async API
-const connectRedis = async () => {
-  try {
-    await client.connect();
-    console.log("Redis Server Connected...");
-  } catch (err) {
-    console.error("Redis connection error:", err);
-    process.exit(1);
-  }
-};
-
-// Handle Redis errors
-client.on("error", (err) => {
-  console.error("Redis error:", err);
-});
 
 // set up the views
 app.set("views", path.join(__dirname, "views"));
@@ -40,28 +25,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// set up the root endpoint
-app.get("/", async (req, res) => {
-  try {
-    // set up the welcome message
-    const msg = "Welcome to Retaman - Redis Task Manager";
-
-    // get tasks - using Redis v4+ API with proper async handling
-    const tasks = await client.lRange("tasks", 0, -1);
-
-    res.render("index", {
-      msg,
-      tasks: tasks || [],
-    });
-  } catch (err) {
-    console.error("Error fetching tasks:", err);
-    res.render("index", {
-      msg: "Welcome to Retaman - Redis Task Manager",
-      tasks: [],
-      error: "Failed to fetch tasks"
-    });
-  }
-});
+// use routes
+app.use("/", tasksRoutes);
 
 // initialize Redis connection and start server
 (async () => {
@@ -75,4 +40,5 @@ app.get("/", async (req, res) => {
   process.exit(1);
 });
 
+// export just the app
 module.exports = app;
