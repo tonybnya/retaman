@@ -13,6 +13,23 @@ const port = 3000;
 // create Redis client
 const client = redis.createClient();
 
+// connect to Redis
+// properly handling the Redis v4+ async API
+const connectRedis = async () => {
+  try {
+    await client.connect();
+    console.log("Redis Server Connected...");
+  } catch (err) {
+    console.error("Redis connection error:", err);
+    process.exit(1);
+  }
+};
+
+// Handle Redis errors
+client.on("error", (err) => {
+  console.error("Redis error:", err);
+});
+
 // set up the views
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -33,7 +50,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// Initialize Redis connection and start server
+// initialize Redis connection and start server
 (async () => {
   await connectRedis();
 
