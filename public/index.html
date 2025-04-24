@@ -7,14 +7,46 @@
     <link rel="stylesheet" href="/css/output.css" />
   </head>
   <body>
-    <h1 class="text-3xl font-bold underline">
-      Welcome to Retaman - Redis Task Manager
-    </h1>
+    <nav
+      class="font-bold p-4 bg-[#09090b] w-full flex gap-2 items-center justify-center"
+    >
+      <img src="/img/task.svg" alt="logo" class="h-8 w-8 animate-pulse" />
+      <h1 class="lg:text-3xl max-sm:text-xl text-[#cca281]">
+        Retaman - Redis Task Manager
+      </h1>
+    </nav>
 
-    <h2>Tasks</h2>
-    <div id="tasks-container">
-      <p>Loading tasks...</p>
-    </div>
+    <main class="max-w-[80%] mx-auto p-10 grid grid-cols-2 gap-4">
+      <div class="">
+        <form class="flex items-center lg:text-md max-sm:text-sm">
+          <div class="mb-5 flex gap-2 items-center justify-center">
+            <label for="task" class="font-medium text-white">Add Task: </label>
+            <input
+              type="text"
+              id="task"
+              class="bg-transparent border border-[#70452f] text-white rounded-lg focus:outline-none p-2"
+              placeholder="Enter a new task..."
+              required
+            />
+            <button
+              type="submit"
+              class="text-white bg-[#70452f] hover:bg-[#70452f]/50 hover:scale-105 cursor-pointer focus:outline-none font-medium rounded-lg px-5 py-2 text-center"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+
+        <h2 class="pb-2">List of Tasks:</h2>
+        <div id="tasks-container">
+          <p>Loading tasks...</p>
+        </div>
+      </div>
+
+      <div class="">
+        <h2 class="pb-2">Next Call</h2>
+      </div>
+    </main>
 
     <script src="/js/index.js"></script>
   </body>

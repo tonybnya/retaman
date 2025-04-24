@@ -29,6 +29,6 @@ async function fetchTasks() {
   } catch (error) {
     console.error("Error fetching tasks:", error);
     document.getElementById("tasks-container").innerHTML =
-      `<p class="error">Failed to load tasks: ${error.message}</p>`;
+      `<p class="error text-center text-red-500">Failed to load tasks: ${error.message}</p>`;
   }
 }

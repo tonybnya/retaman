@@ -19,6 +19,8 @@ bower_components/
 logs
 *.log
 
+*.txt
+
 # Coverage directory used by tools like istanbul
 coverage
 *.lcov
