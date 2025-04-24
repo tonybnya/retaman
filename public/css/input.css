@@ -6,3 +6,7 @@ body {
   background: #1d1d27;
   color: white;
 }
+
+.del:checked + span {
+  color: red;
+}

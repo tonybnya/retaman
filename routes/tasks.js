@@ -49,7 +49,7 @@ router.get("/api/tasks", async (req, res) => {
 });
 
 // API endpoint to create a task
-router.post("/api/tasks", async (req, res) => {
+router.post("/api/tasks/add", async (req, res) => {
   try {
     // get the task from the request body
     const task = req.body.task;
@@ -62,5 +62,67 @@ router.post("/api/tasks", async (req, res) => {
     res.status(400).json({ error: `Failed to add the new task ${task}` });
   }
 });
+
+// API endpoint to delete one or multiple tasks
+router.post("/api/tasks/delete", async (req, res) => {
+  try {
+    let tasksToDel = req.body.tasks;
+    console.log("Tasks to delete (raw):", req.body.tasks);
+
+    // Handle case when a single task is selected (string) or no tasks are selected
+    if (!tasksToDel) {
+      return res.status(400).json({ error: "No tasks selected for deletion." });
+    }
+
+    // Convert to array if it's a single task (string)
+    if (!Array.isArray(tasksToDel)) {
+      tasksToDel = [tasksToDel];
+    }
+
+    console.log("Tasks to delete (processed):", tasksToDel);
+
+    const tasks = await client.lRange("tasks", 0, -1);
+
+    for (let i = 0; i < tasks.length; i++) {
+      if (tasksToDel.includes(tasks[i])) {
+        try {
+          await client.lRem("tasks", 0, tasks[i]); // <-- await here
+        } catch (err) {
+          console.error("Error removing task:", tasks[i], err);
+        }
+      }
+    }
+
+    console.log("Task(s) deleted successfully...");
+    res.redirect("/");
+  } catch (err) {
+    console.error("Error deleting task(s):", err);
+    res.status(500).json({ error: "Failed to delete task(s)." });
+  }
+});
+
+// router.post("/api/tasks/delete", async (req, res) => {
+//   try {
+//     // get the tasks to delete from the request body
+//     const tasksToDel = req.body.tasks;
+//     // get all the tasks in Redis
+//     const tasks = await client.lRange("tasks", 0, -1);
+//
+//     for (let i = 0; i < tasks.length; i++) {
+//       if (tasksToDel.indexOf(tasks[i]) > -1) {
+//         try {
+//           await client.lRem("tasks", 0, tasks[i]);
+//         } catch (err) {
+//           console.log(err);
+//         }
+//       }
+//     }
+//     console.log("Task(s) deleted successfully...");
+//     res.redirect("/");
+//   } catch (err) {
+//     console.error(`Error deleting task(s)`, err);
+//     res.status(404).json({ error: `Failed to delete task(s)` });
+//   }
+// });
 
 export default router;

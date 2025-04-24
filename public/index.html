@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Retaman - Redis Task Manager</title>
     <link rel="stylesheet" href="/css/output.css" />
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
   </head>
   <body>
     <nav
@@ -16,11 +17,13 @@
       </h1>
     </nav>
 
-    <main class="max-w-[80%] mx-auto p-10 grid grid-cols-2 gap-4">
+    <main
+      class="max-w-[80%] mx-auto p-10 grid lg:grid-cols-2 max-sm:grid-cols-1 gap-4"
+    >
       <div class="">
         <form
           method="post"
-          action="/api/tasks"
+          action="/api/tasks/add"
           class="flex items-center lg:text-md max-sm:text-sm"
         >
           <div class="mb-5 flex gap-2 items-center justify-center">
@@ -41,10 +44,8 @@
           </div>
         </form>
 
-        <h2 class="pb-2">List of Tasks:</h2>
-        <div id="tasks-container">
-          <p>Loading tasks...</p>
-        </div>
+        <h2>List of Tasks:</h2>
+        <div class="pt-4" id="tasks-container"></div>
       </div>
 
       <div class="">
