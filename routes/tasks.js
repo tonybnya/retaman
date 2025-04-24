@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const path = require('path');
+const path = require("path");
 
-// Get Redis client from config
-const { client } = require('../config/redis');
+// get Redis client from config
+const { client } = require("../config/redis");
 
-// Route for the root endpoint (using EJS template)
+// route for the root endpoint (using EJS template)
 router.get("/", async (req, res) => {
   try {
     // set up the welcome message
@@ -23,13 +23,13 @@ router.get("/", async (req, res) => {
     res.render("index", {
       msg: "Welcome to Retaman - Redis Task Manager",
       tasks: [],
-      error: "Failed to fetch tasks"
+      error: "Failed to fetch tasks",
     });
   }
 });
 
 // API endpoint to get tasks as JSON
-router.get('/api/tasks', async (req, res) => {
+router.get("/api/tasks", async (req, res) => {
   try {
     const tasks = await client.lRange("tasks", 0, -1);
     res.json(tasks || []);
@@ -39,5 +39,9 @@ router.get('/api/tasks', async (req, res) => {
   }
 });
 
-module.exports = router;
+// API endpoint to create a task
+router.post("/api/tasks", async (req, res) => {
+  //
+});
 
+module.exports = router;
