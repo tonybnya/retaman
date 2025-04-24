@@ -17,11 +17,11 @@ async function fetchTasks() {
     const tasksContainer = document.getElementById("tasks-container");
 
     if (tasks.length === 0) {
-      tasksContainer.innerHTML = "<p>No tasks available.</p>";
+      tasksContainer.innerHTML = `<p class="text-center text-red-500">No tasks available.</p>`;
     } else {
       let html = "<ul>";
       tasks.forEach((task) => {
-        html += `<li>${task}</li>`;
+        html += `<li class="text-red-500">${task}</li>`;
       });
       html += "</ul>";
       tasksContainer.innerHTML = html;

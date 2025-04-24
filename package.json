@@ -10,11 +10,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.4",
     "body-parser": "*",
     "ejs": "^3.1.10",
     "express": "*",
     "morgan": "*",
     "nodemon": "*",
-    "redis": "*"
+    "redis": "*",
+    "tailwindcss": "^4.1.4"
   }
 }
