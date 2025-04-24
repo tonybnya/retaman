@@ -1,13 +1,18 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const logger = require("morgan");
-const path = require("path");
+import express from "express";
+import bodyParser from "body-parser";
+import logger from "morgan";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // import routes
-const tasksRoutes = require("./routes/tasks");
+import tasksRoutes from "./routes/tasks.js";
 
 // import Redis client from config
-const { connectRedis } = require("./config/redis");
+import { connectRedis } from "./config/redis.js";
+
+// create equivalents for __filename and __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // init the main app
 const app = express();
@@ -41,4 +46,4 @@ app.use("/", tasksRoutes);
 });
 
 // export just the app
-module.exports = app;
+export default app;

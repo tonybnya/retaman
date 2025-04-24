@@ -1,9 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const path = require("path");
+// const path = require("path");
+import express from "express";
 
 // get Redis client from config
-const { client } = require("../config/redis");
+import { client } from "../config/redis.js";
+
+// set a router
+const router = express.Router();
 
 // route for the root endpoint (using EJS template)
 router.get("/", async (req, res) => {
@@ -44,4 +46,4 @@ router.post("/api/tasks", async (req, res) => {
   //
 });
 
-module.exports = router;
+export default router;
