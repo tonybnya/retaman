@@ -1,7 +1,9 @@
 import redis from "redis";
 
 // create Redis client
-const client = redis.createClient();
+const client = redis.createClient({
+  url: process.env.REDIS_URL,
+});
 
 // connect to Redis
 // properly handling the Redis v4+ async API
