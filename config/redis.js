@@ -1,9 +1,14 @@
 import redis from "redis";
 
 // create Redis client
+
+// Redis on Railway
 const client = redis.createClient({
   url: process.env.REDIS_URL,
 });
+
+// Local Redis
+// const client = redis.createClient();
 
 // connect to Redis
 // properly handling the Redis v4+ async API
