@@ -20,10 +20,6 @@ const app = express();
 // set up the server port
 const port = 3000;
 
-// set up the views
-// app.set("views", path.join(__dirname, "views"));
-// app.set("view engine", "ejs");
-
 // set up some middlewares
 app.use(logger("dev"));
 app.use(bodyParser.json());
