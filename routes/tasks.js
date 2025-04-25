@@ -7,29 +7,6 @@ import { client } from "../config/redis.js";
 // set a router
 const router = express.Router();
 
-// route for the root endpoint (using EJS template)
-// router.get("/api", async (req, res) => {
-//   try {
-//     // set up the welcome message
-//     const msg = "Welcome to Retaman - Redis Task Manager";
-//
-//     // get tasks - using Redis v4+ API with proper async handling
-//     const tasks = await client.lRange("tasks", 0, -1);
-//
-//     res.render("index", {
-//       msg,
-//       tasks: tasks || [],
-//     });
-//   } catch (err) {
-//     console.error("Error fetching tasks:", err);
-//     res.render("index", {
-//       msg: "Welcome to Retaman - Redis Task Manager",
-//       tasks: [],
-//       error: "Failed to fetch tasks",
-//     });
-//   }
-// });
-
 // route for the root endpoint
 router.get("/api", async (req, res) => {
   // set up the welcome message
@@ -101,28 +78,36 @@ router.post("/api/tasks/delete", async (req, res) => {
   }
 });
 
-// router.post("/api/tasks/delete", async (req, res) => {
-//   try {
-//     // get the tasks to delete from the request body
-//     const tasksToDel = req.body.tasks;
-//     // get all the tasks in Redis
-//     const tasks = await client.lRange("tasks", 0, -1);
-//
-//     for (let i = 0; i < tasks.length; i++) {
-//       if (tasksToDel.indexOf(tasks[i]) > -1) {
-//         try {
-//           await client.lRem("tasks", 0, tasks[i]);
-//         } catch (err) {
-//           console.log(err);
-//         }
-//       }
-//     }
-//     console.log("Task(s) deleted successfully...");
-//     res.redirect("/");
-//   } catch (err) {
-//     console.error(`Error deleting task(s)`, err);
-//     res.status(404).json({ error: `Failed to delete task(s)` });
-//   }
-// });
+// API endpoint to get call as JSON
+router.get("/api/call", async (req, res) => {
+  try {
+    const call = await client.hGetAll("call");
+    res.json(call || {});
+  } catch (err) {
+    console.error("Error fetching call:", err);
+    res.status(500).json({ error: "Failed to fetch call" });
+  }
+});
+
+// API endpoint to create the next business call
+router.post("/api/call/add", async (req, res) => {
+  const newCall = {};
+
+  newCall.name = req.body.name;
+  newCall.company = req.body.company;
+  newCall.phone = req.body.phone;
+  newCall.datetime = req.body.datetime;
+
+  client.hSet("call", [
+    "name",
+    newCall.name,
+    "company",
+    newCall.company,
+    "phone",
+    newCall.phone,
+    "datetime",
+    newCall.datetime,
+  ]);
+});
 
 export default router;

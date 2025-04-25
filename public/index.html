@@ -49,7 +49,39 @@
       </div>
 
       <div class="">
-        <h2 class="pb-2">Next Call</h2>
+        <h2 class="p-2 bg-[#70452f] mb-4 rounded-sm">Next Business Call:</h2>
+        <div id="call-container" class="my-4"></div>
+
+        <h2 class="pb-2 bg-[#70452f] mt-4 rounded-sm">
+          Edit Next Business Call:
+        </h2>
+        <form
+          method="post"
+          action="/api/call"
+          class="bg-[#cca281]/10 p-4 rounded-sm"
+        >
+          <label>Contact Name:</label><br />
+          <input type="text" name="name" placeholder="Contact Name..." />
+          <br /><br />
+
+          <label>Company:</label><br />
+          <input type="text" name="company" placeholder="Company..." />
+          <br /><br />
+
+          <label>Phone:</label><br />
+          <input type="text" name="phone" placeholder="Phone..." />
+          <br /><br />
+
+          <label>Day & Time</label><br />
+          <input
+            type="text"
+            name="datetime"
+            placeholder="Day & Time of the Call..."
+          />
+          <br /><br />
+
+          <input type="submit" value="Submit" />
+        </form>
       </div>
     </main>
 
