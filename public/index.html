@@ -18,69 +18,90 @@
     </nav>
 
     <main
-      class="max-w-[80%] mx-auto p-10 grid lg:grid-cols-2 max-sm:grid-cols-1 gap-4"
+      class="max-w-[80%] mx-auto p-10 grid lg:grid-cols-2 max-sm:grid-cols-1 gap-10"
     >
-      <div class="">
+      <div class="w-full">
         <form
           method="post"
           action="/api/tasks/add"
-          class="flex items-center lg:text-md max-sm:text-sm"
+          class="w-full flex flex-col lg:text-md max-sm:text-sm"
         >
-          <div class="mb-5 flex gap-2 items-center justify-center">
-            <label for="task" class="font-medium text-white">Add Task: </label>
+          <div class="mb-5 flex flex-col gap-2 items-center justify-center">
             <input
               type="text"
               name="task"
-              class="bg-transparent border border-[#70452f] text-white rounded-lg focus:outline-none p-2"
+              class="w-full bg-transparent border border-[#70452f] text-white rounded-sm focus:outline-none p-2"
               placeholder="Enter a new task..."
               required
             />
             <button
               type="submit"
-              class="text-white bg-[#70452f] hover:bg-[#70452f]/50 hover:scale-105 cursor-pointer focus:outline-none font-medium rounded-lg px-5 py-2 text-center"
+              class="w-full text-white bg-[#70452f] hover:bg-[#70452f]/50 hover:scale-105 cursor-pointer focus:outline-none font-medium rounded-sm px-5 py-2 text-center"
             >
               Submit
             </button>
           </div>
         </form>
 
-        <h2>List of Tasks:</h2>
+        <h2 class="p-2 bg-white/30 text-white mb-4 rounded-sm">
+          List of Tasks:
+        </h2>
         <div class="pt-4" id="tasks-container"></div>
       </div>
 
-      <div class="">
-        <h2 class="p-2 bg-[#70452f] mb-4 rounded-sm">Next Business Call:</h2>
+      <div class="w-full">
+        <h2 class="p-2 bg-white/30 text-white mb-4 rounded-sm">
+          Next Business Call:
+        </h2>
         <div id="call-container" class="my-4"></div>
 
-        <h2 class="pb-2 bg-[#70452f] mt-4 rounded-sm">
+        <h2 class="p-2 bg-white/30 text-white mb-4 rounded-sm">
           Edit Next Business Call:
         </h2>
+        <div id="set-call-container" class="my-4"></div>
         <form
           method="post"
-          action="/api/call"
-          class="bg-[#cca281]/10 p-4 rounded-sm"
+          action="/api/call/add"
+          class="w-full bg-[#cca281]/10 p-4 rounded-sm"
         >
-          <label>Contact Name:</label><br />
-          <input type="text" name="name" placeholder="Contact Name..." />
-          <br /><br />
-
-          <label>Company:</label><br />
-          <input type="text" name="company" placeholder="Company..." />
-          <br /><br />
-
-          <label>Phone:</label><br />
-          <input type="text" name="phone" placeholder="Phone..." />
-          <br /><br />
-
-          <label>Day & Time</label><br />
           <input
+            class="w-full bg-transparent border border-[#70452f] text-white rounded-sm focus:outline-none p-2"
+            type="text"
+            name="name"
+            placeholder="Contact Name..."
+          />
+          <br /><br />
+
+          <input
+            class="w-full bg-transparent border border-[#70452f] text-white rounded-sm focus:outline-none p-2"
+            type="text"
+            name="company"
+            placeholder="Company..."
+          />
+          <br /><br />
+
+          <input
+            class="w-full bg-transparent border border-[#70452f] text-white rounded-sm focus:outline-none p-2"
+            type="text"
+            name="phone"
+            placeholder="Phone..."
+          />
+          <br /><br />
+
+          <input
+            class="w-full bg-transparent border border-[#70452f] text-white rounded-sm focus:outline-none p-2"
             type="text"
             name="datetime"
             placeholder="Day & Time of the Call..."
           />
           <br /><br />
 
-          <input type="submit" value="Submit" />
+          <button
+            type="submit"
+            class="w-full text-white bg-[#70452f] hover:bg-[#70452f]/50 hover:scale-105 cursor-pointer focus:outline-none font-medium rounded-sm px-5 py-2 text-center"
+          >
+            Submit
+          </button>
         </form>
       </div>
     </main>

@@ -44,11 +44,13 @@ router.post("/api/tasks/add", async (req, res) => {
 router.post("/api/tasks/delete", async (req, res) => {
   try {
     let tasksToDel = req.body.tasks;
-    console.log("Tasks to delete (raw):", req.body.tasks);
+    console.log("Tasks to delete:", req.body.tasks);
 
     // Handle case when a single task is selected (string) or no tasks are selected
     if (!tasksToDel) {
-      return res.status(400).json({ error: "No tasks selected for deletion." });
+      // return res.status(400).json({ error: "No tasks selected for deletion." });
+      alert("No tasks selected for deletion.");
+      res.redirect("/");
     }
 
     // Convert to array if it's a single task (string)
@@ -56,7 +58,7 @@ router.post("/api/tasks/delete", async (req, res) => {
       tasksToDel = [tasksToDel];
     }
 
-    console.log("Tasks to delete (processed):", tasksToDel);
+    console.log("Tasks to delete:", tasksToDel);
 
     const tasks = await client.lRange("tasks", 0, -1);
 
@@ -91,23 +93,31 @@ router.get("/api/call", async (req, res) => {
 
 // API endpoint to create the next business call
 router.post("/api/call/add", async (req, res) => {
-  const newCall = {};
+  const { name, company, phone, datetime } = req.body;
 
-  newCall.name = req.body.name;
-  newCall.company = req.body.company;
-  newCall.phone = req.body.phone;
-  newCall.datetime = req.body.datetime;
+  // validation
+  if (!name || !company || !phone || !datetime) {
+    res.status(400).json({ message: "All fields are required." });
+    console.log("All fields are required.");
+    res.redirect("/");
+  }
 
-  client.hSet("call", [
-    "name",
-    newCall.name,
-    "company",
-    newCall.company,
-    "phone",
-    newCall.phone,
-    "datetime",
-    newCall.datetime,
-  ]);
+  try {
+    // Save the new call in Redis
+    await client.hSet("call", {
+      name,
+      company,
+      phone,
+      datetime,
+    });
+
+    // return res.status(201).json({ message: "Call saved successfully." });
+    console.log("Call saved successfully.");
+    res.redirect("/");
+  } catch (err) {
+    console.error("Redis error:", err);
+    return res.status(500).json({ message: "Server error saving call." });
+  }
 });
 
 export default router;
